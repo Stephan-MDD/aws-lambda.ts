@@ -1,0 +1,16 @@
+service: hello-serverless
+
+provider:
+    name: aws
+    runtime: nodejs12.x
+    region: eu-north-1
+
+functions:
+    helloFunction:
+        handler: build/main.handler
+        name: hello
+        events:
+            - http:
+                  path: hello
+                  method: get
+                  cors: true
