@@ -1,8 +1,8 @@
 # AWS Lambda REST API
 
+-   [ ] add ESLint
 -   [ ] add DTO mapper (throw BadArguments 400 error)
 -   [ ] add DynamoDB
--   [ ] add ESLint
 -   [ ] add logging
 -   [ ] add tests
 -   [ ] add middleware
@@ -13,3 +13,5 @@
 ---
 
 -   [ ] add walk-trough
+
+---

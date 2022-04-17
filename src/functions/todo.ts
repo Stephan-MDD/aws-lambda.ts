@@ -49,6 +49,7 @@ export async function update(event: APIGatewayProxyEvent): Promise<APIGatewayPro
 	return response;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function remove(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
 	const response: APIGatewayProxyResult = responseFactory(204);
 	return response;
