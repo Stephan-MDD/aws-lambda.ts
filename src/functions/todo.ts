@@ -10,15 +10,13 @@ import { HttpStatusCodes } from '../libs/http/status-codes';
 import { classMapper } from '../libs/mappers/class-mapper';
 import { TodoDto } from '../libs/models/todo';
 
+type KeyValue = Record<string | number | symbol, unknown>;
+
 export async function query(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
 	const query: APIGatewayProxyEventQueryStringParameters | null = event.queryStringParameters;
+	const todoDto: TodoDto | null = await classMapper(TodoDto, Object.create(query));
 
-	try {
-		// if query === null -> default search
-		const todoDto: TodoDto = await classMapper(TodoDto, query ?? {});
-		console.log(todoDto);
-	} catch (error) {
-		console.error(error);
+	if (todoDto === null) {
 		const response: APIGatewayProxyResult = responseFactory(HttpStatusCodes.BAD_REQUEST);
 		return response;
 	}
@@ -29,7 +27,7 @@ export async function query(event: APIGatewayProxyEvent): Promise<APIGatewayProx
 
 export async function get(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
 	const params: APIGatewayProxyEventPathParameters | null = event.pathParameters;
-	const body: Record<string | number | symbol, unknown> = { message: 'hello get', params };
+	const body: KeyValue = { message: 'hello get', params };
 	const response: APIGatewayProxyResult = responseFactory(body);
 	return response;
 }
@@ -42,12 +40,10 @@ export async function create(event: APIGatewayProxyEvent): Promise<APIGatewayPro
 		return response;
 	}
 
-	try {
-		const body: Record<string | number | symbol, unknown> = JSON.parse(event.body);
-		const todoDto: TodoDto = await classMapper(TodoDto, body);
-		console.log(todoDto);
-	} catch (error) {
-		console.error(error);
+	const body: KeyValue = JSON.parse(event.body);
+	const todoDto: TodoDto | null = await classMapper(TodoDto, body);
+
+	if (todoDto === null) {
 		const response: APIGatewayProxyResult = responseFactory(HttpStatusCodes.BAD_REQUEST);
 		return response;
 	}
@@ -65,12 +61,10 @@ export async function update(event: APIGatewayProxyEvent): Promise<APIGatewayPro
 		return response;
 	}
 
-	try {
-		const body: Record<string | number | symbol, unknown> = JSON.parse(event.body);
-		const todoDto: TodoDto = await classMapper(TodoDto, body);
-		console.log(todoDto);
-	} catch (error) {
-		console.error(error);
+	const body: KeyValue = JSON.parse(event.body);
+	const todoDto: TodoDto | null = await classMapper(TodoDto, body);
+
+	if (todoDto === null) {
 		const response: APIGatewayProxyResult = responseFactory(HttpStatusCodes.BAD_REQUEST);
 		return response;
 	}
