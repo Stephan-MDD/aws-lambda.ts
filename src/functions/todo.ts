@@ -11,6 +11,7 @@ export async function query(event: APIGatewayProxyEvent): Promise<APIGatewayProx
 	const query: APIGatewayProxyEventQueryStringParameters | null = event.queryStringParameters;
 	const body: Record<string, unknown> = { message: 'hello query', query };
 	const response: APIGatewayProxyResult = responseFactory(body);
+
 	return response;
 }
 

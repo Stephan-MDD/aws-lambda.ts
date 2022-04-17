@@ -26,7 +26,8 @@
 	},
 	"eslintConfig": {
 		"env": {
-			"browser": false,
+			"node": true,
+			"jest": true,
 			"es2021": true
 		},
 		"extends": [
@@ -57,7 +58,13 @@
 			"semi": [
 				"error",
 				"always"
-			]
+			],
+			"func-style": [
+				"error",
+				"declaration"
+			],
+			"no-console": "error",
+			"eqeqeq": "error"
 		}
 	}
 }
