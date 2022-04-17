@@ -1,12 +1,14 @@
 # AWS Lambda REST API
 
--   [ ] add DTO mapper (throw BadArguments 400 error)
+-   [ ] fix @path issue
+-   [ ] http errors
 -   [ ] add DynamoDB
+-   [ ] add envs
 -   [ ] add logging
 -   [ ] add tests
+-   [ ] add github actions
 -   [ ] add middleware
 -   [ ] extend serverless.ts options
-
 -   [ ] optimize tsconfig to omit (`serverless.js`, `*.functions.js`)
 
 ---

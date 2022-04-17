@@ -1,11 +1,14 @@
 // libraries
 import type { APIGatewayProxyResult } from 'aws-lambda';
 
-export function responseFactory(statusCode: number): APIGatewayProxyResult;
+// resources
+import { HttpStatusCodes } from './status-codes';
+
+export function responseFactory(statusCode: HttpStatusCodes): APIGatewayProxyResult;
 export function responseFactory(body: Record<string, unknown>): APIGatewayProxyResult;
-export function responseFactory(statusCode: number, body: Record<string, unknown>): APIGatewayProxyResult;
+export function responseFactory(statusCode: HttpStatusCodes, body: Record<string, unknown>): APIGatewayProxyResult;
 export function responseFactory(...args: unknown[]): APIGatewayProxyResult {
-	const response: APIGatewayProxyResult = { statusCode: 200, body: '' };
+	const response: APIGatewayProxyResult = { statusCode: HttpStatusCodes.OK, body: '' };
 
 	if (args.length === 0) {
 		return response;
