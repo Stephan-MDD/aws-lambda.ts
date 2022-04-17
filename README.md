@@ -1,9 +1,15 @@
 # AWS Lambda REST API
 
--   [ ] add Response factory
--   [ ] add class mapper (throw BadArguments error)
+-   [ ] add DTO mapper (throw BadArguments 400 error)
 -   [ ] add DynamoDB
+-   [ ] add ESLint
 -   [ ] add logging
 -   [ ] add tests
 -   [ ] add middleware
 -   [ ] extend serverless.ts options
+
+-   [ ] optimize tsconfig to omit (`serverless.js`, `*.functions.js`)
+
+---
+
+-   [ ] add walk-trough

@@ -5,7 +5,7 @@ import type { APIGatewayProxyEventPathParameters } from 'aws-lambda';
 import type { APIGatewayProxyEventQueryStringParameters } from 'aws-lambda';
 
 // resources
-import { responseFactory } from '@http/response-factory';
+import { responseFactory } from '../libs/http/response-factory';
 
 export async function query(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
 	const query: APIGatewayProxyEventQueryStringParameters | null = event.queryStringParameters;

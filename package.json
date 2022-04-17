@@ -5,7 +5,9 @@
 	"license": "MIT",
 	"scripts": {
 		"build": " rm -rf build && yarn tsc",
-		"deploy": "yarn serverless deploy"
+		"deploy": "yarn serverless deploy",
+		"invoke:local": "yarn serverless invoke local -f",
+		"invoke": "yarn serverless invoke -f"
 	},
 	"dependencies": {
 		"serverless": "^3.14.0",
