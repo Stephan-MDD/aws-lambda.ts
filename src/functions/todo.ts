@@ -5,30 +5,37 @@ import type { APIGatewayProxyEventPathParameters } from 'aws-lambda';
 import type { APIGatewayProxyEventQueryStringParameters } from 'aws-lambda';
 
 // resources
-import { responseFactory } from '../libs/http/response-factory';
-import { HttpStatusCodes } from '../libs/http/status-codes';
+import { badRequestResponse, createdResponse, noContentResponse, okResponse } from '../libs/http/response-factory';
 import { classMapper } from '../libs/mappers/class-mapper';
 import { TodoDto } from '../libs/models/todo';
 
-type KeyValue = Record<string | number | symbol, unknown>;
+type KeyValuePair = Record<string | number | symbol, unknown>;
 
-export async function query(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
+export async function query(event: APIGatewayProxyEvent, context: any): Promise<APIGatewayProxyResult> {
+	console.log(context);
+
 	const query: APIGatewayProxyEventQueryStringParameters | null = event.queryStringParameters;
-	const todoDto: TodoDto | null = await classMapper(TodoDto, Object.create(query));
 
-	if (todoDto === null) {
-		const response: APIGatewayProxyResult = responseFactory(HttpStatusCodes.BAD_REQUEST);
+	if (query === undefined || query === null) {
+		const response: APIGatewayProxyResult = badRequestResponse();
 		return response;
 	}
 
-	const response: APIGatewayProxyResult = responseFactory(HttpStatusCodes.OK);
+	const todoDto: TodoDto | null = await classMapper(TodoDto, Object.create(query));
+
+	if (todoDto === null) {
+		const response: APIGatewayProxyResult = badRequestResponse();
+		return response;
+	}
+
+	const response: APIGatewayProxyResult = okResponse(todoDto);
 	return response;
 }
 
 export async function get(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
 	const params: APIGatewayProxyEventPathParameters | null = event.pathParameters;
-	const body: KeyValue = { message: 'hello get', params };
-	const response: APIGatewayProxyResult = responseFactory(body);
+	const body: KeyValuePair = { message: 'hello get', params };
+	const response: APIGatewayProxyResult = okResponse(body);
 	return response;
 }
 
@@ -36,19 +43,19 @@ export async function create(event: APIGatewayProxyEvent): Promise<APIGatewayPro
 	const contentType: string | undefined = event.headers['content-type'];
 
 	if (event.body === null || contentType !== 'application/json') {
-		const response: APIGatewayProxyResult = responseFactory(HttpStatusCodes.BAD_REQUEST);
+		const response: APIGatewayProxyResult = badRequestResponse();
 		return response;
 	}
 
-	const body: KeyValue = JSON.parse(event.body);
+	const body: KeyValuePair = JSON.parse(event.body);
 	const todoDto: TodoDto | null = await classMapper(TodoDto, body);
 
 	if (todoDto === null) {
-		const response: APIGatewayProxyResult = responseFactory(HttpStatusCodes.BAD_REQUEST);
+		const response: APIGatewayProxyResult = badRequestResponse();
 		return response;
 	}
 
-	const response: APIGatewayProxyResult = responseFactory(HttpStatusCodes.CREATED);
+	const response: APIGatewayProxyResult = createdResponse({});
 	return response;
 }
 
@@ -57,24 +64,24 @@ export async function update(event: APIGatewayProxyEvent): Promise<APIGatewayPro
 	const contentType: string | undefined = event.headers['content-type'];
 
 	if (event.body === null || contentType !== 'application/json') {
-		const response: APIGatewayProxyResult = responseFactory(HttpStatusCodes.BAD_REQUEST);
+		const response: APIGatewayProxyResult = badRequestResponse();
 		return response;
 	}
 
-	const body: KeyValue = JSON.parse(event.body);
+	const body: KeyValuePair = JSON.parse(event.body);
 	const todoDto: TodoDto | null = await classMapper(TodoDto, body);
 
 	if (todoDto === null) {
-		const response: APIGatewayProxyResult = responseFactory(HttpStatusCodes.BAD_REQUEST);
+		const response: APIGatewayProxyResult = badRequestResponse();
 		return response;
 	}
 
-	const response: APIGatewayProxyResult = responseFactory(HttpStatusCodes.NO_CONTENT);
+	const response: APIGatewayProxyResult = noContentResponse();
 	return response;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function remove(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
-	const response: APIGatewayProxyResult = responseFactory(HttpStatusCodes.NO_CONTENT);
+	const params: APIGatewayProxyEventPathParameters | null = event.pathParameters;
+	const response: APIGatewayProxyResult = noContentResponse();
 	return response;
 }

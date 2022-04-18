@@ -15,6 +15,12 @@ const serverlessConfiguration: AWS = {
 	functions: {
 		...todoFunctions,
 	},
+
+	plugins: ['serverless-middleware'],
+
+	package: {
+		patterns: ['README.md', '.gitignore', './src/test/**'],
+	},
 };
 
 module.exports = serverlessConfiguration;

@@ -2,11 +2,14 @@
 import type { AWS } from '@serverless/typescript';
 type ASWFunctions = AWS['functions'];
 
-export const todoFunctions: ASWFunctions = {
+export const todoFunctions: ASWFunctions & any = {
 	queryTodo: {
 		name: 'query-todo',
-		handler: 'build/src/functions/todo.query',
 		events: [{ http: { method: 'get', path: 'todo', cors: true } }],
+		handler: 'build/src/functions/todo.query',
+		middleware: {
+			pre: ['build/src/functions/middleware/body-parser.parser'],
+		},
 	},
 
 	getTodo: {

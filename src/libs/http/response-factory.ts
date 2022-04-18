@@ -4,10 +4,12 @@ import type { APIGatewayProxyResult } from 'aws-lambda';
 // resources
 import { HttpStatusCodes } from './status-codes';
 
-export function responseFactory(statusCode: HttpStatusCodes): APIGatewayProxyResult;
-export function responseFactory(body: Record<string, unknown>): APIGatewayProxyResult;
-export function responseFactory(statusCode: HttpStatusCodes, body: Record<string, unknown>): APIGatewayProxyResult;
-export function responseFactory(...args: unknown[]): APIGatewayProxyResult {
+type KeyValuePair = Record<string | number | symbol, unknown>;
+
+function responseFactory(statusCode: HttpStatusCodes): APIGatewayProxyResult;
+function responseFactory(body: KeyValuePair): APIGatewayProxyResult;
+function responseFactory(statusCode: HttpStatusCodes, body: KeyValuePair): APIGatewayProxyResult;
+function responseFactory(...args: unknown[]): APIGatewayProxyResult {
 	const response: APIGatewayProxyResult = { statusCode: HttpStatusCodes.OK, body: '' };
 
 	if (args.length === 0) {
@@ -33,5 +35,59 @@ export function responseFactory(...args: unknown[]): APIGatewayProxyResult {
 		return response;
 	}
 
+	return response;
+}
+
+export function okResponse(body?: object): APIGatewayProxyResult {
+	const response: APIGatewayProxyResult = responseFactory(HttpStatusCodes.OK, Object.create(body ?? null));
+	return response;
+}
+
+export function createdResponse(body: object): APIGatewayProxyResult {
+	const response: APIGatewayProxyResult = responseFactory(HttpStatusCodes.CREATED, Object.create(body));
+	return response;
+}
+
+export function noContentResponse(): APIGatewayProxyResult {
+	const response: APIGatewayProxyResult = responseFactory(HttpStatusCodes.NO_CONTENT);
+	return response;
+}
+
+/* client errors */
+
+export function badRequestResponse(): APIGatewayProxyResult {
+	const response: APIGatewayProxyResult = responseFactory(HttpStatusCodes.BAD_REQUEST);
+	return response;
+}
+
+export function unauthorizedResponse(): APIGatewayProxyResult {
+	const response: APIGatewayProxyResult = responseFactory(HttpStatusCodes.UNAUTHORIZED);
+	return response;
+}
+
+export function forbiddenResponse(): APIGatewayProxyResult {
+	const response: APIGatewayProxyResult = responseFactory(HttpStatusCodes.FORBIDDEN);
+	return response;
+}
+
+export function notFoundResponse(): APIGatewayProxyResult {
+	const response: APIGatewayProxyResult = responseFactory(HttpStatusCodes.NOT_FOUND);
+	return response;
+}
+
+export function methodNotAllowedResponse(): APIGatewayProxyResult {
+	const response: APIGatewayProxyResult = responseFactory(HttpStatusCodes.METHOD_NOT_ALLOWED);
+	return response;
+}
+
+/* server errors */
+
+export function internalServerErrorResponse(): APIGatewayProxyResult {
+	const response: APIGatewayProxyResult = responseFactory(HttpStatusCodes.INTERNAL_SERVER_ERROR);
+	return response;
+}
+
+export function notImplementedResponse(): APIGatewayProxyResult {
+	const response: APIGatewayProxyResult = responseFactory(HttpStatusCodes.NOT_IMPLEMENTED);
 	return response;
 }

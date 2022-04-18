@@ -3064,6 +3064,11 @@ serverless-esbuild@^1.26.2:
     semver "^7.3.5"
     string.prototype.matchall "^4.0.4"
 
+serverless-middleware@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/serverless-middleware/-/serverless-middleware-2.0.0.tgz#99e2773a8fb0a4e7598ca7ca99e139c4277b5c3b"
+  integrity sha512-VJztjqx7aB5Z4//hEXkqc0LnK9JS/HOv7leMxQ06gNgdGfwXkWGDkCa5vXECADDkx7mQofUkPusc+RbrbVTZlg==
+
 serverless@^3.14.0:
   version "3.14.0"
   resolved "https://registry.npmjs.org/serverless/-/serverless-3.14.0.tgz"

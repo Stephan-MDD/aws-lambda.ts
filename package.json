@@ -6,8 +6,9 @@
 	"scripts": {
 		"build": " rm -rf build && yarn tsc",
 		"deploy": "yarn serverless deploy",
-		"invoke:local": "yarn serverless invoke local -f",
-		"invoke": "yarn serverless invoke -f"
+		"invoke:local": "yarn serverless invoke local --function",
+		"invoke": "yarn serverless invoke --function",
+		"logs": "yarn serverless logs --region eu-north-1 --function "
 	},
 	"dependencies": {
 		"class-transformer": "^0.5.1",
@@ -23,6 +24,7 @@
 		"esbuild": "^0.14.36",
 		"eslint": "^8.13.0",
 		"serverless-esbuild": "^1.26.2",
+		"serverless-middleware": "^2.0.0",
 		"ts-node": "^10.7.0",
 		"tsconfig-paths": "^3.14.1",
 		"typescript": "^4.6.3"
